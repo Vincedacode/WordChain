@@ -63,8 +63,8 @@ public class Word_Chain {
             String choice= myscanner.nextLine().toLowerCase();
             if(choice.equals("y")){
                 wordStack.pop();
-                wordList.remove(wordList.size() - 1);
-                wordSet.remove(wordSet.size() - 1);
+                wordList.remove(lastword);
+                wordSet.remove(lastword);
                 System.out.println("Undo was successful");
             } else if (choice.equals("n")) {
                 System.out.println("Undo operation cancelled!");
@@ -82,7 +82,7 @@ public class Word_Chain {
            if (wordList.isEmpty()) {
                System.out.println("No words in the chain!");
            } else {
-               System.out.println(wordStack);
+               System.out.println(wordList);
            }
        }catch (Exception e){
            System.out.println(e.getMessage());
@@ -94,7 +94,7 @@ public class Word_Chain {
             if (wordList.isEmpty()) {
                 System.out.println("No words in the chain!");
             } else {
-                System.out.println(wordStack.reversed());
+                System.out.println(wordList.reversed());
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -120,23 +120,32 @@ public class Word_Chain {
         }
     }
 
-    public void loadfromFile(){
-        try{
-            BufferedReader loadfile = new BufferedReader(new FileReader("wordchain.txt"));
-                String word;
-                while ((word = loadfile.readLine()) != null){
-                    System.out.println(word);
-                }
+    public void loadfromFile() {
+        try (BufferedReader loadfile = new BufferedReader(new FileReader("wordchain.txt"))) {
+            wordList.clear();
+            wordSet.clear();
+            wordStack.clear();
 
-           loadfile.close();
-        }
-        catch (IOException e){
-            System.out.println("Error loading from file: " + e.getMessage());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+            String word;
+            while ((word = loadfile.readLine()) != null) {
+                wordList.add(word);
+                wordSet.add(word);
+                wordStack.push(word);
+            }
+            System.out.println("Session loaded successfully!");
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found!");
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
         }
     }
 
+    public void clearSession() {
+        wordList.clear();
+        wordSet.clear();
+        wordStack.clear();
+        System.out.println("Session cleared!");
+    }
 
 
 }

@@ -14,7 +14,8 @@ public class Main {
             System.out.println("4. Display Words - Backward");
             System.out.println("5. Save session to file");
             System.out.println("6. Load session from file");
-            System.out.println("7. Exit");
+            System.out.println("7. Clear Session");
+            System.out.println("8. Exit");
             System.out.print("Choose an option: ");
 
             try {
@@ -41,6 +42,8 @@ public class Main {
                         wordChain.loadfromFile();
                         break;
                     case 7:
+                       wordChain.clearSession();
+                    case 8:
                         running = false;
                         System.out.println("Exiting...");
                         break;
